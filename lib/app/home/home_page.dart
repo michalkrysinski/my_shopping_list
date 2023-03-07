@@ -11,6 +11,10 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+//text controller
+final _controller = TextEditingController();
+
+// list of myShoppingList tasks
 class _HomePageState extends State<HomePage> {
   List myShoppingList = [
     ["Make", false],
@@ -18,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   ];
 
   // checkbox was tapped
-
   void checkBoxChanged(
     bool? value,
     int index,
@@ -27,13 +30,26 @@ class _HomePageState extends State<HomePage> {
       myShoppingList[index][1] = !myShoppingList[index][1];
     });
   }
-//createNewTask
 
+  //save new task
+  void saveNewTask() {
+    setState(() {
+      myShoppingList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
+//createNewTask
   void createNewTask() {
     showDialog(
         context: context,
         builder: (context) {
-          return DialogBox();
+          return DialogBox(
+            controller: _controller,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
         });
   }
 
