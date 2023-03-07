@@ -16,20 +16,26 @@ class MyShoppingListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(35.0),
+      padding: const EdgeInsets.only(left: 35.0, right: 25, top: 25),
       child: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Colors.yellow,
+          color: Colors.cyan,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
 //checkbox
-            Checkbox(value: taskCompleted, onChanged: onChanged),
+            Checkbox(
+              value: taskCompleted,
+              onChanged: onChanged,
+              activeColor: Colors.black,
+            ),
 
             //task name
-            Text(taskName),
+            Text(
+              taskName,
+            ),
           ],
         ),
       ),
