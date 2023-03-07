@@ -26,6 +26,15 @@ class _HomePageState extends State<HomePage> {
       myShoppingList[index][1] = !myShoppingList[index][1];
     });
   }
+//createNewTask
+
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog();
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +43,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('My shopping list'),
         elevation: 0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(
+          Icons.add,
+        ),
       ),
       body: ListView.builder(
         itemCount: myShoppingList.length,

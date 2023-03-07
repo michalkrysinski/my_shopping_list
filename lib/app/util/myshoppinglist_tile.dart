@@ -29,12 +29,18 @@ class MyShoppingListTile extends StatelessWidget {
             Checkbox(
               value: taskCompleted,
               onChanged: onChanged,
-              activeColor: Colors.black,
+              activeColor: Colors.red,
             ),
 
             //task name
             Text(
               taskName,
+              style: TextStyle(
+                color: Colors.white,
+                decoration: taskCompleted
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+              ),
             ),
           ],
         ),
