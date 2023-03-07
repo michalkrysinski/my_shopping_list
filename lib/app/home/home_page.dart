@@ -43,14 +43,24 @@ class _HomePageState extends State<HomePage> {
 //createNewTask
   void createNewTask() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return DialogBox(
-            controller: _controller,
-            onSave: saveNewTask,
-            onCancel: () => Navigator.of(context).pop(),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+//delete task
+  void deleteTask(int index) {
+    setState(
+      () {
+        myShoppingList.removeAt(index);
+      },
+    );
   }
 
   @override
@@ -63,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
@@ -73,7 +83,11 @@ class _HomePageState extends State<HomePage> {
           return MyShoppingListTile(
             taskName: myShoppingList[index][0],
             taskCompleted: myShoppingList[index][1],
-            onChanged: (value) => checkBoxChanged(value, index),
+            onChanged: (value) => checkBoxChanged(
+              value,
+              index,
+            ),
+            deleteFunction: (context) => deleteTask(index),
           );
         },
       ),
