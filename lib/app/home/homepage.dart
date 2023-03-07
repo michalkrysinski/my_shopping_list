@@ -7,6 +7,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.yellow[200],
+      appBar: AppBar(
+        title: const Text('My shopping list'),
+      ),
+    );
   }
 }
