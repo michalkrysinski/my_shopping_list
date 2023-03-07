@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shopping_list/app/util/dialog_box.dart';
 import 'package:my_shopping_list/app/util/myshoppinglist_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog();
+          return DialogBox();
         });
   }
 
