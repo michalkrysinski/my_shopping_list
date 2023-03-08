@@ -36,7 +36,7 @@ class MyShoppingListTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
-            color: Colors.cyan,
+            color: const Color.fromARGB(255, 246, 210, 255),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -52,7 +52,7 @@ class MyShoppingListTile extends StatelessWidget {
               Text(
                 taskName,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   decoration: taskCompleted
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
