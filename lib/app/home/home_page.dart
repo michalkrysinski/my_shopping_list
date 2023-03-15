@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_shopping_list/app/data/database.dart';
+
 import 'package:my_shopping_list/app/util/dialog_box.dart';
 import 'package:my_shopping_list/app/util/myshoppinglist_tile.dart';
 
@@ -11,15 +14,25 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-//text controller
-final _controller = TextEditingController();
-
-// list of myShoppingList tasks
 class _HomePageState extends State<HomePage> {
-  List myShoppingList = [
-    ["Make", false],
-    ["ToDo", false],
-  ];
+// reference the hive box
+  final _myBox = Hive.box('mybox');
+  MyShoppingListDataBase db = MyShoppingListDataBase();
+
+  @override
+  void initState() {
+    //if this is the first time ever openinng the app, then create default data
+    if (_myBox.get("MyShoppingList") == null) {
+      db.createInitialData();
+    } else {
+      // there already exists data
+      db.loadData();
+    }
+    super.initState();
+  }
+
+//text controller
+  final _controller = TextEditingController();
 
   // checkbox was tapped
   void checkBoxChanged(
@@ -27,17 +40,19 @@ class _HomePageState extends State<HomePage> {
     int index,
   ) {
     setState(() {
-      myShoppingList[index][1] = !myShoppingList[index][1];
+      db.myShoppingList[index][1] = !db.myShoppingList[index][1];
     });
+    db.updateDataBase();
   }
 
   //save new task
   void saveNewTask() {
     setState(() {
-      myShoppingList.add([_controller.text, false]);
+      db.myShoppingList.add([_controller.text, false]);
       _controller.clear();
     });
     Navigator.of(context).pop();
+    db.updateDataBase();
   }
 
 //createNewTask
@@ -58,17 +73,19 @@ class _HomePageState extends State<HomePage> {
   void deleteTask(int index) {
     setState(
       () {
-        myShoppingList.removeAt(index);
+        db.myShoppingList.removeAt(index);
       },
     );
+    db.updateDataBase();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[200],
+      backgroundColor: Colors.orange[200],
       appBar: AppBar(
         title: const Text('My shopping list'),
+        centerTitle: true,
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
@@ -78,11 +95,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: myShoppingList.length,
+        itemCount: db.myShoppingList.length,
         itemBuilder: (context, index) {
           return MyShoppingListTile(
-            taskName: myShoppingList[index][0],
-            taskCompleted: myShoppingList[index][1],
+            taskName: db.myShoppingList[index][0],
+            taskCompleted: db.myShoppingList[index][1],
             onChanged: (value) => checkBoxChanged(
               value,
               index,

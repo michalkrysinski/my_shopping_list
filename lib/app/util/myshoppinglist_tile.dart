@@ -30,13 +30,13 @@ class MyShoppingListTile extends StatelessWidget {
             onPressed: deleteFunction,
             icon: Icons.delete,
             backgroundColor: Colors.red.shade300,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(12),
           )
         ]),
         child: Container(
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 246, 210, 255),
+            color: Colors.orange,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
